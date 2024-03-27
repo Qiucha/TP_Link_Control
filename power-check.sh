@@ -8,7 +8,7 @@ About_THRESHOLD
 LOWER_THRES=20
 UPPER_THRES=80
 
-if [ LOWER_THRES -ge UPPER_THRES ]; then
+if [ $LOWER_THRES -ge $UPPER_THRES ]; then
     echo "check THRESHOLD settings, probably something goes wrong."
     exit 1
 fi
