@@ -50,13 +50,13 @@ do
   smartplug_state=$($PYTHON_PATH plug_state.py)
 
   # Check if battery level is lower than LOWER_THRES
-  if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ] && [ $smartplug_state != "True" ]
+  if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ] && [ $smartplug_state = "False" ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} on."
     $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP on # --name $KASA_DEVICE_PORT_NAME
   
   # Check if battery level is higher than UPPER_THRES
-  elif [ "`echo "${battery_level} > ${UPPER_THRES}" | bc`" -eq 1 ] && [ $smartplug_state == "True" ]
+  elif [ "`echo "${battery_level} > ${UPPER_THRES}" | bc`" -eq 1 ] && [ $smartplug_state = "True" ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} off."
     $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP off # --name $KASA_DEVICE_PORT_NAME
