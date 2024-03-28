@@ -46,8 +46,8 @@ do
   $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP state | grep "Device state:" > plug_state
 
   # exetract exact level using python, could probably be done by bash file.
-  battery_level=$($PYTHON_PATH battery_level.py)
-  smartplug_state=$($PYTHON_PATH plug_state.py)
+  battery_level=$($PYTHON_PATH $(dirname $0)/python/battery_level.py)
+  smartplug_state=$($PYTHON_PATH $(dirname $0)/python/plug_state.py)
 
   # Check if battery level is lower than LOWER_THRES
   if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ] && [ $smartplug_state = "False" ]
