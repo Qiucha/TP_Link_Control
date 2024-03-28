@@ -42,8 +42,8 @@ About_User_File
 while true
 do
   # get current charge level using tlp-stat -b, store the information to a file called state.
-  sudo tlp-stat -b | grep "Charge" > $(dirname $0)/generated/charge_level
-  $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP state | grep "Device state:" > $(dirname $0)/generated/plug_state
+  sudo tlp-stat -b | grep "Charge" > "$(dirname $0)/generated/charge_level"
+  $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP state | grep "Device state:" > "$(dirname $0)/generated/plug_state"
 
   # exetract exact level using python, could probably be done by bash file.
   battery_level=$($PYTHON_PATH $(dirname $0)/python/battery_level.py)
