@@ -51,13 +51,13 @@ do
   if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} on."
-    $KASA_PATH --host $KASA_DEVICE_IP on --name $KASA_DEVICE_PORT_NAME
+    $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP on # --name $KASA_DEVICE_PORT_NAME
   
   # Check if battery level is higher than UPPER_THRES
   elif [ "`echo "${battery_level} > ${UPPER_THRES}" | bc`" -eq 1 ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} off."
-    $KASA_PATH --host $KASA_DEVICE_IP off --name $KASA_DEVICE_PORT_NAME
+    $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP off # --name $KASA_DEVICE_PORT_NAME
   
   # If none of both is true, report the current battery_level
   else
