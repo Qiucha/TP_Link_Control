@@ -69,7 +69,7 @@ do
       echo "Plug Status Keep: ON"
     fi
     echo "Current Charge Level: ${battery_level} [%]"
-    echo "LOWER_THRES: ${LOWER_THRES}[%], UPPER_THRES: ${UPPER_THRES}[%]"
+    echo "LOWER_THRES: ${LOWER_THRES} [%], UPPER_THRES: ${UPPER_THRES} [%]"
   fi
   
   # Wait for 5 mins to continue the next round.
