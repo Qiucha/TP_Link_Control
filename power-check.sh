@@ -42,19 +42,21 @@ About_User_File
 while true
 do
   # get current charge level using tlp-stat -b, store the information to a file called state.
-  sudo tlp-stat -b | grep "Charge" > state
+  sudo tlp-stat -b | grep "Charge" > charge_level
+  $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP state | grep "Device state:" > plug_state
 
   # exetract exact level using python, could probably be done by bash file.
-  battery_level=$($PYTHON_PATH power-check.py)
+  battery_level=$($PYTHON_PATH battery_level.py)
+  smartplug_state=$($PYTHON_PATH plug_state.py)
 
   # Check if battery level is lower than LOWER_THRES
-  if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ]
+  if [ "`echo "${battery_level} < $LOWER_THRES" | bc`" -eq 1 ] && [ $smartplug_state != "True" ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} on."
     $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP on # --name $KASA_DEVICE_PORT_NAME
   
   # Check if battery level is higher than UPPER_THRES
-  elif [ "`echo "${battery_level} > ${UPPER_THRES}" | bc`" -eq 1 ]
+  elif [ "`echo "${battery_level} > ${UPPER_THRES}" | bc`" -eq 1 ] && [ $smartplug_state == "True" ]
   then
     echo "Current: ${battery_level}, Turning ${KASA_DEVICE_PORT_NAME} off."
     $KASA_PATH --username $USERNAME --password $PASSWD --host $KASA_DEVICE_IP off # --name $KASA_DEVICE_PORT_NAME
